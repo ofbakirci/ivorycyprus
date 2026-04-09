@@ -365,11 +365,11 @@ function App() {
             <div className="input-group">
               <label>Özel Vade (Ay)</label>
               <input
-                type="number"
-                min="0"
-                max="24"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={customAy}
-                onChange={(e) => { setCustomAy(Math.min(24, Math.max(0, Number(e.target.value) || 0))); setAnahtarManual(false) }}
+                onChange={(e) => { const raw = e.target.value.replace(/[^0-9]/g, ''); setCustomAy(Math.min(24, Math.max(0, Number(raw) || 0))); setAnahtarManual(false) }}
               />
               <span className="hint">Maksimum 24 ay</span>
             </div>
@@ -381,11 +381,13 @@ function App() {
                 <label>Peşinat</label>
                 <div className="input-with-toggle">
                   <input
-                    type="number"
-                    min="0"
+                    type="text"
+                    inputMode="decimal"
+                    pattern="[0-9]*"
                     value={pesinVal}
                     onChange={(e) => {
-                      const v = Math.max(0, Number(e.target.value) || 0)
+                      const raw = e.target.value.replace(/[^0-9]/g, '')
+                      const v = Math.max(0, Number(raw) || 0)
                       const max = pesinMode === '%' ? 100 : listeFiyati
                       setPesinVal(Math.min(v, max))
                       setAnahtarManual(false) // re-trigger auto-calc
@@ -418,12 +420,14 @@ function App() {
                 <label>Anahtar Teslim {!anahtarManual && <span className="auto-badge">otomatik</span>}</label>
                 <div className="input-with-toggle">
                   <input
-                    type="number"
-                    min="0"
+                    type="text"
+                    inputMode="decimal"
+                    pattern="[0-9]*"
                     value={hesap.vadeAy === 0 ? (anahtarMode === '%' ? Math.round(hesap.anahtarPct) : Math.round(hesap.anahtarTutari)) : anahtarVal}
                     disabled={hesap.vadeAy === 0}
                     onChange={(e) => {
-                      const v = Math.max(0, Number(e.target.value) || 0)
+                      const raw = e.target.value.replace(/[^0-9]/g, '')
+                      const v = Math.max(0, Number(raw) || 0)
                       const maxPct = 100 - pesinPctClamped
                       const max = anahtarMode === '%' ? maxPct : listeFiyati * maxPct / 100
                       setAnahtarVal(Math.min(v, max))
