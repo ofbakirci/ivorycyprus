@@ -1,8 +1,28 @@
-# React + Vite
+# Ivory World — Fiyat Listesi ve Ödeme Tablosu Hesaplayıcı
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Kuzey Kıbrıs'ta gayrimenkul yatırımı için interaktif ödeme planı hesaplayıcısı.
 
-Currently, two official plugins are available:
+## Özellikler
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Proje Seçimi** — Ivory Prime, Tria Tip A/B, Penthouse
+- **Esnek Ödeme Planı** — Peşinat, anahtar teslim ve taksit oranlarını ayarlama (% veya £)
+- **Otomatik İndirim Hesaplama** — Peşin (%15), peşinat ≥%50 (%10), teslim öncesi ≥%60 (%10), ≥%50 (%5)
+- **Dinamik Teslim Tarihi** — Kasım 2026 teslimine göre otomatik ay hesaplaması
+- **Ödeme Planı Tablosu** — Gerçek tarihlerle aylık ödeme takvimi
+- **Döviz Çevirici** — Canlı kurlarla £ → ₺ / $ / €
+- **Akıllı Validasyon** — Geçersiz planlarda uyarı ve bir sonraki indirim dilimine yönlendirme
+
+## Kurulum
+
+```bash
+npm install
+npm run dev
+```
+
+## Teknolojiler
+
+React + Vite
+
+## Lisans
+
+Tüm hakları Bakırcı Limited'e aittir. [ivorycyprus.com](https://ivorycyprus.com)
