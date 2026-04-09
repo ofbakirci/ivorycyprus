@@ -39,7 +39,7 @@ function getAyTarih(ayOffset) {
 }
 
 function formatCurrency(val) {
-  return new Intl.NumberFormat('en-GB', {
+  return new Intl.NumberFormat('tr-TR', {
     style: 'decimal',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
@@ -382,9 +382,8 @@ function App() {
                 <div className="input-with-toggle">
                   <input
                     type="text"
-                    inputMode="decimal"
-                    pattern="[0-9]*"
-                    value={pesinVal}
+                    inputMode="numeric"
+                    value={pesinMode === '£' ? formatCurrency(pesinVal) : pesinVal}
                     onChange={(e) => {
                       const raw = e.target.value.replace(/[^0-9]/g, '')
                       const v = Math.max(0, Number(raw) || 0)
@@ -418,9 +417,10 @@ function App() {
                 <div className="input-with-toggle">
                   <input
                     type="text"
-                    inputMode="decimal"
-                    pattern="[0-9]*"
-                    value={hesap.vadeAy === 0 ? (anahtarMode === '%' ? Math.round(hesap.anahtarPct) : Math.round(hesap.anahtarTutari)) : anahtarVal}
+                    inputMode="numeric"
+                    value={hesap.vadeAy === 0
+                      ? (anahtarMode === '%' ? Math.round(hesap.anahtarPct) : formatCurrency(Math.round(hesap.anahtarTutari)))
+                      : (anahtarMode === '£' ? formatCurrency(anahtarVal) : anahtarVal)}
                     disabled={hesap.vadeAy === 0}
                     onChange={(e) => {
                       const raw = e.target.value.replace(/[^0-9]/g, '')
