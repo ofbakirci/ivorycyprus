@@ -287,8 +287,14 @@
   color: #1a365d;
 }
 
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .payment-table {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
 }
 

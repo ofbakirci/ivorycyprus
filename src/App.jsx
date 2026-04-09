@@ -532,6 +532,7 @@ function App() {
       {/* Payment Table */}
       <div className={`table-section${hesap.gecersiz ? ' dimmed' : ''}`}>
         <h2>Ödeme Planı Tablosu</h2>
+        <div className="table-scroll-wrapper">
         <table className="payment-table">
           <thead>
             <tr>
@@ -570,6 +571,7 @@ function App() {
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Currency Converter */}
@@ -584,6 +586,7 @@ function App() {
           <span className="rate-badge">£1 = ${rates.USD.toFixed(2)}</span>
           <span className="rate-badge">£1 = €{rates.EUR.toFixed(2)}</span>
         </div>
+        <div className="table-scroll-wrapper">
         <table className="payment-table">
           <thead>
             <tr>
@@ -606,6 +609,7 @@ function App() {
             ))}
           </tbody>
         </table>
+        </div>
         <div className="converter-footer">
           {ratesFetchedAt && (
             <span>
