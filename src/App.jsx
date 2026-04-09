@@ -393,21 +393,18 @@ function App() {
                       setAnahtarManual(false) // re-trigger auto-calc
                     }}
                   />
-                  <button
-                    type="button"
-                    className="mode-toggle"
-                    onClick={() => {
-                      if (pesinMode === '%') {
-                        setPesinMode('£')
-                        setPesinVal(Math.round(hesap.pesinTutari))
-                      } else {
-                        setPesinMode('%')
-                        setPesinVal(Math.round(hesap.pesinPct))
-                      }
-                    }}
-                  >
-                    {pesinMode}
-                  </button>
+                  <div className="mode-toggle-group">
+                    <button
+                      type="button"
+                      className={pesinMode === '%' ? 'active' : ''}
+                      onClick={() => { if (pesinMode !== '%') { setPesinMode('%'); setPesinVal(Math.round(hesap.pesinPct)) } }}
+                    >%</button>
+                    <button
+                      type="button"
+                      className={pesinMode === '£' ? 'active' : ''}
+                      onClick={() => { if (pesinMode !== '£') { setPesinMode('£'); setPesinVal(Math.round(hesap.pesinTutari)) } }}
+                    >£</button>
+                  </div>
                 </div>
                 <span className="hint">
                   {pesinMode === '%'
@@ -434,21 +431,18 @@ function App() {
                       setAnahtarManual(true)
                     }}
                   />
-                  <button
-                    type="button"
-                    className="mode-toggle"
-                    onClick={() => {
-                      if (anahtarMode === '%') {
-                        setAnahtarMode('£')
-                        setAnahtarVal(Math.round(hesap.anahtarTutari))
-                      } else {
-                        setAnahtarMode('%')
-                        setAnahtarVal(Math.round(hesap.anahtarPct))
-                      }
-                    }}
-                  >
-                    {anahtarMode}
-                  </button>
+                  <div className="mode-toggle-group">
+                    <button
+                      type="button"
+                      className={anahtarMode === '%' ? 'active' : ''}
+                      onClick={() => { if (anahtarMode !== '%') { setAnahtarMode('%'); setAnahtarVal(Math.round(hesap.anahtarPct)) } }}
+                    >%</button>
+                    <button
+                      type="button"
+                      className={anahtarMode === '£' ? 'active' : ''}
+                      onClick={() => { if (anahtarMode !== '£') { setAnahtarMode('£'); setAnahtarVal(Math.round(hesap.anahtarTutari)) } }}
+                    >£</button>
+                  </div>
                 </div>
                 <span className="hint">
                   {anahtarMode === '%'

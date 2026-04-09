@@ -117,22 +117,39 @@
   border-bottom-right-radius: 0 !important;
 }
 
-.mode-toggle {
-  width: 44px;
+.mode-toggle-group {
+  display: flex;
   border: 1px solid #cbd5e0;
   border-left: none;
   border-radius: 0 8px 8px 0;
+  overflow: hidden;
+}
+
+.mode-toggle-group button {
+  width: 36px;
+  border: none;
   background: #edf2f7;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #2d3748;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #a0aec0;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.15s;
   padding: 0;
 }
 
-.mode-toggle:hover {
+.mode-toggle-group button:first-child {
+  border-right: 1px solid #cbd5e0;
+}
+
+.mode-toggle-group button.active {
+  background: #2b6cb0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.mode-toggle-group button:not(.active):hover {
   background: #e2e8f0;
+  color: #4a5568;
 }
 
 /* Summary Cards */
