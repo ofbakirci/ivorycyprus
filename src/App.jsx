@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import './App.css'
 
 const TESLIM_TARIHI = new Date(2026, 10, 1) // Kasım 2026 (ay 0-indexed)
@@ -56,6 +56,19 @@ function App() {
   const [anahtarVal, setAnahtarVal] = useState(10)
   const [anahtarMode, setAnahtarMode] = useState('%') // '%' or '£'
   const [anahtarManual, setAnahtarManual] = useState(false)
+
+  // VIP mode: 5x logo click to unlock manual discount override
+  const logoClicksRef = useRef(0)
+  const [vipMode, setVipMode] = useState(false)
+  const [vipDiscount, setVipDiscount] = useState(0)
+  const handleLogoClick = () => {
+    logoClicksRef.current += 1
+    if (logoClicksRef.current >= 5) {
+      logoClicksRef.current = 0
+      setVipMode(v => !v)
+      setVipDiscount(0)
+    }
+  }
 
   const teslimeKalanAy = getTeslimeKalanAy()
 
@@ -147,6 +160,13 @@ function App() {
       // %40-49 arası — geçerli plan ama indirim yok
       const kalanYuzde = Math.ceil(50 - teslimeKadarToplamPct)
       indirimAciklama = `Teslim öncesi toplamınızı %${kalanYuzde} daha artırarak %5 indirim kazanabilirsiniz!`
+    }
+
+    // VIP override — valid plan ise normal indirimi ezer
+    const planGecerli = isPesin || (!taksitYok || pesinPctEff >= 40) && teslimeKadarToplamPct >= 40
+    if (vipMode && vipDiscount > 0 && planGecerli) {
+      indirimOrani = vipDiscount / 100
+      indirimAciklama = `VIP özel indirimi uygulandı — %${vipDiscount}.`
     }
 
     const netFiyat = listeFiyati * (1 - indirimOrani)
@@ -288,7 +308,7 @@ function App() {
       pesinPctEff,
       ilkTaksitPesinat,
     }
-  }, [listeFiyati, vade, customAy, pesinVal, pesinMode, anahtarVal, anahtarMode, teslimeKalanAy])
+  }, [listeFiyati, vade, customAy, pesinVal, pesinMode, anahtarVal, anahtarMode, teslimeKalanAy, vipMode, vipDiscount])
 
   // Exchange rates
   const [rates, setRates] = useState({ TRY: 43.5, USD: 1.28, EUR: 1.18 })
@@ -330,8 +350,24 @@ function App() {
   return (
     <div className="app">
       <div className="app-header">
-        <img src="/ivory-world.png" alt="Ivory World" className="app-logo" />
+        <img src="/ivory-world.png" alt="Ivory World" className="app-logo" onClick={handleLogoClick} />
         <p className="app-subtitle">Fiyat Listesi ve Ödeme Tablosu Hesaplayıcı</p>
+        {vipMode && (
+          <div className="vip-box">
+            <span className="vip-label">VIP İndirim</span>
+            <input
+              type="text"
+              inputMode="numeric"
+              value={vipDiscount}
+              onChange={(e) => {
+                const raw = e.target.value.replace(/[^0-9]/g, '')
+                const v = Math.max(0, Math.min(25, Number(raw) || 0))
+                setVipDiscount(v)
+              }}
+            />
+            <span className="vip-suffix">%</span>
+          </div>
+        )}
       </div>
 
       {/* Input Section */}
